@@ -17,6 +17,13 @@ jobs:
       - checkout
       - run: python test.py
 
+  deploy:
+    docker:
+      - image: cimg/python:3.11
+
+    steps:
+      - run: echo "CircleCI Practical Done"
+
 workflows:
   buid_test_and_deploy:
     jobs:
@@ -24,3 +31,9 @@ workflows:
       - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
